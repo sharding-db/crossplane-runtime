@@ -26,8 +26,8 @@ import (
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	"github.com/crossplane/crossplane-runtime/pkg/meta"
-	"github.com/crossplane/crossplane-runtime/pkg/resource/fake"
+	"github.com/crossplane/crossplane-runtime/v15/pkg/meta"
+	"github.com/crossplane/crossplane-runtime/v15/pkg/resource/fake"
 )
 
 func TestAnyOf(t *testing.T) {

@@ -28,11 +28,11 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/manager"
 	"sigs.k8s.io/controller-runtime/pkg/reconcile"
 
-	xpv1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
-	"github.com/crossplane/crossplane-runtime/pkg/event"
-	"github.com/crossplane/crossplane-runtime/pkg/logging"
-	"github.com/crossplane/crossplane-runtime/pkg/meta"
-	"github.com/crossplane/crossplane-runtime/pkg/resource"
+	xpv1 "github.com/crossplane/crossplane-runtime/v15/apis/common/v1"
+	"github.com/crossplane/crossplane-runtime/v15/pkg/event"
+	"github.com/crossplane/crossplane-runtime/v15/pkg/logging"
+	"github.com/crossplane/crossplane-runtime/v15/pkg/meta"
+	"github.com/crossplane/crossplane-runtime/v15/pkg/resource"
 )
 
 const (

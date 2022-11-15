@@ -1,3 +1,17 @@
+This repo is used to avoid conflict between crossplane-runtime v0.15.0 and above version
+
+we use v15 to present v0.15.0
+
+You can import in go.mod like this:
+
+```go.mod
+import (
+    github.com/crossplane/crossplane-runtime/v15 v15.0.0
+)
+
+replace github.com/crossplane/crossplane-runtime/v15 => github.com/sharding-db/crossplane-runtime/v15 v15.0.0
+```
+
 # crossplane-runtime [![Godoc](https://img.shields.io/badge/godoc-reference-blue.svg)](https://godoc.org/github.com/crossplane/crossplane-runtime)
 
 ## Overview
@@ -47,9 +61,9 @@ crossplane-runtime is under the Apache 2.0 license.
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fcrossplane%2Fcrossplane-runtime.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fcrossplane%2Fcrossplane-runtime?ref=badge_large)
 
 [developer guide]: https://crossplane.io/docs/master/contributing/overview.html
-[API documentation]: https://godoc.org/github.com/crossplane/crossplane-runtime
+[api documentation]: https://godoc.org/github.com/crossplane/crossplane-runtime
 [contributing]: https://github.com/crossplane/crossplane/blob/master/CONTRIBUTING.md
-[issue]: https://github.com/crossplane/crossplane-runtime/issues
+[issue]: https://github.com/crossplane/crossplane-runtime/v15/issues
 [slack channel]: https://slack.crossplane.io
 [crossplane-dev]: https://groups.google.com/forum/#!forum/crossplane-dev
 [@crossplane_io]: https://twitter.com/crossplane_io
