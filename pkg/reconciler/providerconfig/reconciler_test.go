@@ -32,9 +32,9 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/manager"
 	"sigs.k8s.io/controller-runtime/pkg/reconcile"
 
-	"github.com/crossplane/crossplane-runtime/pkg/resource"
-	"github.com/crossplane/crossplane-runtime/pkg/resource/fake"
-	"github.com/crossplane/crossplane-runtime/pkg/test"
+	"github.com/crossplane/crossplane-runtime/v15/pkg/resource"
+	"github.com/crossplane/crossplane-runtime/v15/pkg/resource/fake"
+	"github.com/crossplane/crossplane-runtime/v15/pkg/test"
 )
 
 // This can't live in fake, because it would cause an import cycle due to

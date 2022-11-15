@@ -33,7 +33,7 @@ import (
 	// Allow auth to cloud providers
 	_ "k8s.io/client-go/plugin/pkg/client/auth"
 
-	"github.com/crossplane/crossplane-runtime/pkg/resource"
+	"github.com/crossplane/crossplane-runtime/v15/pkg/resource"
 )
 
 const (

@@ -28,7 +28,7 @@ import (
 	"k8s.io/apimachinery/pkg/runtime/schema"
 	"k8s.io/apimachinery/pkg/types"
 
-	xpv1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
+	xpv1 "github.com/crossplane/crossplane-runtime/v15/apis/common/v1"
 )
 
 // AnnotationKeyExternalName is the key in the annotations map of a resource for
@@ -50,7 +50,7 @@ const (
 // be of the supplied group, version, and kind.
 // Deprecated: use a more specific reference type, such as TypedReference or
 // Reference instead of the overly verbose ObjectReference.
-// See https://github.com/crossplane/crossplane-runtime/issues/49
+// See https://github.com/crossplane/crossplane-runtime/v15/issues/49
 func ReferenceTo(o metav1.Object, of schema.GroupVersionKind) *corev1.ObjectReference {
 	v, k := of.ToAPIVersionAndKind()
 	return &corev1.ObjectReference{

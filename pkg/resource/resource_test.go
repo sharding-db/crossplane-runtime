@@ -34,9 +34,9 @@ import (
 	"k8s.io/client-go/util/retry"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 
-	xpv1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
-	"github.com/crossplane/crossplane-runtime/pkg/resource/fake"
-	"github.com/crossplane/crossplane-runtime/pkg/test"
+	xpv1 "github.com/crossplane/crossplane-runtime/v15/apis/common/v1"
+	"github.com/crossplane/crossplane-runtime/v15/pkg/resource/fake"
+	"github.com/crossplane/crossplane-runtime/v15/pkg/test"
 )
 
 const (

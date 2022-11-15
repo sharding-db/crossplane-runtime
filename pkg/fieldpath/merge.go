@@ -22,7 +22,7 @@ import (
 	"github.com/imdario/mergo"
 	"github.com/pkg/errors"
 
-	xpv1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
+	xpv1 "github.com/crossplane/crossplane-runtime/v15/apis/common/v1"
 )
 
 const (
