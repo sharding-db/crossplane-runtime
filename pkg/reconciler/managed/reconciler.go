@@ -42,8 +42,9 @@ const (
 	reconcileGracePeriod = 30 * time.Second
 	reconcileTimeout     = 1 * time.Minute
 
-	defaultpollInterval = 1 * time.Minute
-	defaultGracePeriod  = 30 * time.Second
+	defaultPollUptoDateInterval = 1 * time.Minute
+	defaultpollInterval         = 1 * time.Minute
+	defaultGracePeriod          = 30 * time.Second
 )
 
 // Error strings.
@@ -443,9 +444,10 @@ type Reconciler struct {
 	client     client.Client
 	newManaged func() resource.Managed
 
-	pollInterval        time.Duration
-	timeout             time.Duration
-	creationGracePeriod time.Duration
+	pollUptoDateInterval time.Duration
+	pollInterval         time.Duration
+	timeout              time.Duration
+	creationGracePeriod  time.Duration
 
 	// The below structs embed the set of interfaces used to implement the
 	// managed resource reconciler. We do this primarily for readability, so
@@ -499,6 +501,14 @@ type ReconcilerOption func(*Reconciler)
 func WithTimeout(duration time.Duration) ReconcilerOption {
 	return func(r *Reconciler) {
 		r.timeout = duration
+	}
+}
+
+// WithPollUptoDateInterval specifies how long the Reconciler should wait before queueing
+// a new reconciliation after it's up to date.
+func WithPollUptoDateInterval(after time.Duration) ReconcilerOption {
+	return func(r *Reconciler) {
+		r.pollUptoDateInterval = after
 	}
 }
 
@@ -613,15 +623,16 @@ func NewReconciler(m manager.Manager, of resource.ManagedKind, o ...ReconcilerOp
 	_ = nm()
 
 	r := &Reconciler{
-		client:              m.GetClient(),
-		newManaged:          nm,
-		pollInterval:        defaultpollInterval,
-		creationGracePeriod: defaultGracePeriod,
-		timeout:             reconcileTimeout,
-		managed:             defaultMRManaged(m),
-		external:            defaultMRExternal(),
-		log:                 logging.NewNopLogger(),
-		record:              event.NewNopRecorder(),
+		client:               m.GetClient(),
+		newManaged:           nm,
+		pollUptoDateInterval: defaultPollUptoDateInterval,
+		pollInterval:         defaultpollInterval,
+		creationGracePeriod:  defaultGracePeriod,
+		timeout:              reconcileTimeout,
+		managed:              defaultMRManaged(m),
+		external:             defaultMRExternal(),
+		log:                  logging.NewNopLogger(),
+		record:               event.NewNopRecorder(),
 	}
 
 	for _, ro := range o {
@@ -980,9 +991,9 @@ func (r *Reconciler) Reconcile(ctx context.Context, req reconcile.Request) (reco
 		// after the specified poll interval in order to observe it and react
 		// accordingly.
 		// https://github.com/crossplane/crossplane/issues/289
-		log.Debug("External resource is up to date", "requeue-after", time.Now().Add(r.pollInterval))
+		log.Debug("External resource is up to date", "requeue-after", time.Now().Add(r.pollUptoDateInterval))
 		managed.SetConditions(xpv1.ReconcileSuccess())
-		return reconcile.Result{RequeueAfter: r.pollInterval}, errors.Wrap(r.client.Status().Update(ctx, managed), errUpdateManagedStatus)
+		return reconcile.Result{RequeueAfter: r.pollUptoDateInterval}, errors.Wrap(r.client.Status().Update(ctx, managed), errUpdateManagedStatus)
 	}
 
 	if observation.Diff != "" {
