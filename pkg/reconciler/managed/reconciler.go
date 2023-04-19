@@ -18,6 +18,7 @@ package managed
 
 import (
 	"context"
+	"math/rand"
 	"strings"
 	"time"
 
@@ -991,9 +992,12 @@ func (r *Reconciler) Reconcile(ctx context.Context, req reconcile.Request) (reco
 		// after the specified poll interval in order to observe it and react
 		// accordingly.
 		// https://github.com/crossplane/crossplane/issues/289
-		log.Debug("External resource is up to date", "requeue-after", time.Now().Add(r.pollUptoDateInterval))
+
+		// add a 0-10% jitter to the poll interval
+		pollTime := r.pollUptoDateInterval - time.Duration(rand.Int63n(int64(r.pollUptoDateInterval/10)))
+		log.Debug("External resource is up to date", "requeue-after", time.Now().Add(pollTime))
 		managed.SetConditions(xpv1.ReconcileSuccess())
-		return reconcile.Result{RequeueAfter: r.pollUptoDateInterval}, errors.Wrap(r.client.Status().Update(ctx, managed), errUpdateManagedStatus)
+		return reconcile.Result{RequeueAfter: pollTime}, errors.Wrap(r.client.Status().Update(ctx, managed), errUpdateManagedStatus)
 	}
 
 	if observation.Diff != "" {
